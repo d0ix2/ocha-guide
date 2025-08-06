@@ -45,6 +45,7 @@ function CardSlider({
     canScroll,
     resumeDelay,
     draggingRef,
+    mobileBoost: 1.6,
   });
 
   // 5) 루프 보정

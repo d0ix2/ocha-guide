@@ -4,12 +4,13 @@ export function useAutoplayCarousel(
   trackRef,
   {
     enabled = true,
-    speed = 24,
+    speed = 24, // px/sec (CSS px)
     loop = true,
     setWidth = 0,
     canScroll = true,
     resumeDelay = 1200,
-    draggingRef, // 선택(ref<boolean>)
+    draggingRef, // ref<boolean>
+    mobileBoost = 1.6, // 모바일 가속 배수 (필요시 조정)
   } = {},
 ) {
   useEffect(() => {
@@ -19,20 +20,36 @@ export function useAutoplayCarousel(
     let rafId = 0;
     let prevTs;
     let resumeTimer = 0;
-    const pxPerSec = Math.max(6, speed);
+    let acc = 0; // 소수점 누적
+
+    // 모바일 단말 단순 감지(충분히 보수적으로)
+    const isMobile = typeof navigator !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent);
+
+    const base = Math.max(6, speed);
+    const pxPerSec = base * (isMobile ? mobileBoost : 1);
 
     const stepFrame = (ts) => {
       if (prevTs != null && !(draggingRef && draggingRef.current)) {
         const dt = (ts - prevTs) / 1000;
-        const dx = pxPerSec * dt;
+        acc += pxPerSec * dt; // 소수점 누적
+
         if (loop && setWidth > 0) {
-          el.scrollLeft += dx;
-          if (el.scrollLeft >= setWidth * 2) el.scrollLeft -= setWidth;
-          else if (el.scrollLeft < 0) el.scrollLeft += setWidth;
+          // 정수 단위로만 실제 스크롤 반영
+          const intStep = acc > 0 ? Math.floor(acc) : Math.ceil(acc);
+          if (intStep !== 0) {
+            el.scrollLeft += intStep;
+            acc -= intStep; // 잔여 소수점 유지
+            if (el.scrollLeft >= setWidth * 2) el.scrollLeft -= setWidth;
+            else if (el.scrollLeft < 0) el.scrollLeft += setWidth;
+          }
         } else {
           const max = el.scrollWidth - el.clientWidth;
-          el.scrollLeft += dx;
-          if (el.scrollLeft >= max - 1) el.scrollLeft = 0;
+          const intStep = acc > 0 ? Math.floor(acc) : Math.ceil(acc);
+          if (intStep !== 0) {
+            el.scrollLeft += intStep;
+            acc -= intStep;
+            if (el.scrollLeft >= max - 1) el.scrollLeft = 0;
+          }
         }
       }
       prevTs = ts;
@@ -42,6 +59,7 @@ export function useAutoplayCarousel(
     const start = () => {
       if (!rafId) {
         prevTs = undefined;
+        acc = 0;
         el.setAttribute('data-autoplay', 'true');
         rafId = requestAnimationFrame(stepFrame);
       }
@@ -61,13 +79,12 @@ export function useAutoplayCarousel(
       }, resumeDelay);
     };
 
+    // 이벤트: pointerdown만으로 충분. (touchstart는 pointerdown으로 커버되는데 중복으로 pause 유발 가능)
     const onPointerDown = () => pause();
     const onWheel = () => pause();
-    const onTouchStart = () => pause();
 
     el.addEventListener('pointerdown', onPointerDown);
     el.addEventListener('wheel', onWheel, { passive: true });
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
 
     const onVis = () => (document.hidden ? stop() : start());
     document.addEventListener('visibilitychange', onVis);
@@ -78,7 +95,6 @@ export function useAutoplayCarousel(
       document.removeEventListener('visibilitychange', onVis);
       el.removeEventListener('pointerdown', onPointerDown);
       el.removeEventListener('wheel', onWheel);
-      el.removeEventListener('touchstart', onTouchStart);
       if (resumeTimer) clearTimeout(resumeTimer);
     };
   }, [trackRef, enabled, speed, loop, setWidth, canScroll, resumeDelay, draggingRef]);

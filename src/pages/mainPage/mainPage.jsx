@@ -7,6 +7,7 @@ const MainPage = ({ currentTheme, onThemeChange }) => {
   // eslint-disable-next-line no-unused-vars
   const [keyword, setKeyword] = useState('');
   const [lang, setLang] = useState('ja'); // 'ja' | 'en' | 'ko'
+  const isMobile = typeof navigator !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent);
 
   return (
     <>
@@ -15,9 +16,9 @@ const MainPage = ({ currentTheme, onThemeChange }) => {
       <div style={{ padding: '0 2rem' }}>
         <CardSlider
           autoPlay
-          speed={20}
-          dragScale={0.5} // 더 덜 움직이게
-          dragThreshold={12} // 살짝 움직여도 클릭으로 인식
+          speed={isMobile ? 28 : 20} // 모바일 가속
+          dragScale={0.5}
+          dragThreshold={12}
           wheelFactor={0.7}
           lang={lang}
         />
