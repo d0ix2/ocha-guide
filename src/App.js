@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './styles/GlobalStyle';
+import theme from './styles/theme';
+
+import MainPage from './pages/mainPage/mainPage';
+import DetailPage from './pages/detailPage/detailPage';
 
 function App() {
+  const [currentTheme, setCurrentTheme] = useState('light');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme[currentTheme]}>
+      <GlobalStyle />
+      <Router>
+    <Routes>
+      <Route
+            path="/"
+            element={
+              <MainPage
+                currentTheme={currentTheme}
+                onThemeChange={(e) => setCurrentTheme(e.target.value)}
+              />
+            }
+          />
+      <Route path="/guide/:id" element={<DetailPage />} />
+    </Routes>
+    </Router>
+    </ThemeProvider>
   );
 }
 
