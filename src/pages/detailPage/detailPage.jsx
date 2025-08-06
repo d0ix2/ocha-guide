@@ -21,12 +21,15 @@ export default function DetailPage() {
 
   const [md, setMd] = useState('');
   const [err, setErr] = useState(null);
+
+  // eslint-disable-next-line no-unused-vars
   const [resolvedLang, setResolvedLang] = useState(lang);
 
   const meta = useMemo(() => guideList.find((it) => it.id === id) || null, [id]);
   const base = useMemo(() => meta?.base || `${id}/${id}`, [meta, id]);
 
   // 페이지 상위 타이틀: 현재 사용 x
+  // eslint-disable-next-line no-unused-vars
   const title =
     meta?.i18n?.[lang]?.title ??
     meta?.i18n?.ja?.title ??
@@ -40,17 +43,16 @@ export default function DetailPage() {
     setMd('');
     setErr(null);
 
-    // 요청 언어 → 나머지 언어 순으로 fallback
     const order = [lang, ...LANGS.filter((l) => l !== lang)];
 
     (async () => {
       for (const l of order) {
-        const key = `./${base}-${l}.md`; // require.context 키는 ./ 로 시작해야 함
+        const key = `./${base}-${l}.md`;
         let url;
         try {
-          url = ctx(key); // 번들된 정적 URL(string) 반환
+          url = ctx(key);
         } catch {
-          continue; // 해당 언어 파일이 없으면 다음 언어로
+          continue;
         }
 
         try {

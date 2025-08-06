@@ -9,7 +9,7 @@ import { useWheelToHorizontal } from '../../hooks/useWheelToHorizontal';
 import { useAutoplayCarousel } from '../../hooks/useAutoplayCarousel';
 import { useLoopNormalize } from '../../hooks/useLoopNormalize';
 
-export default function CardSlider({
+function CardSlider({
   items = defaultGuides,
   lang = 'ja',
   loop = true,
@@ -102,3 +102,5 @@ export default function CardSlider({
     </S.SliderWrapper>
   );
 }
+
+export default CardSlider;

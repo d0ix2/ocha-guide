@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Header from '../../components/Header/Header';
-import CardSlider from '../../components/CardSilder/CardSlider';
+import CardSlider from '../../components/CardSlider/CardSlider';
 import ThemeSelector from '../../components/ThemeSelector/ThemeSelector';
 
 const MainPage = ({ currentTheme, onThemeChange }) => {
+  // eslint-disable-next-line no-unused-vars
   const [keyword, setKeyword] = useState('');
   const [lang, setLang] = useState('ja'); // 'ja' | 'en' | 'ko'
 
