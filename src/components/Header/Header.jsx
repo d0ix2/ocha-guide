@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Header.style';
 
 const LANGS = [
@@ -14,24 +15,29 @@ const UI_TEXT = {
     title2: '留学生 生活ガイド',
     searchPlaceholder: 'キーワードを検索',
     clear: 'クリア',
+    guide: '利用ガイド',
   },
   en: {
     title1: 'Ochanomizu University',
     title2: 'Life Guide for International Students',
     searchPlaceholder: 'Search by keyword',
     clear: 'Clear',
+    guide: 'Guide',
   },
   ko: {
     title1: '오차노미즈여자대학교',
     title2: '유학생 생활 가이드',
     searchPlaceholder: '키워드로 검색',
     clear: '지우기',
+    guide: '이용 가이드',
   },
 };
 
 export default function Header({ onSearch, onLangChange }) {
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState('');
-  const [lang, setLang] = useState('ja'); // ← locale 코드로 관리
+  const [lang, setLang] = useState('ja');
   const t = UI_TEXT[lang] ?? UI_TEXT.ja;
 
   const handleClear = () => {
@@ -47,13 +53,22 @@ export default function Header({ onSearch, onLangChange }) {
 
   const selectLang = (value) => {
     setLang(value);
-    onLangChange && onLangChange(value); // ← 'ja' | 'en' | 'ko' 전달
+    onLangChange && onLangChange(value);
+  };
+
+  const goGuide = () => {
+    navigate(`/service-info?lang=${lang}`);
   };
 
   return (
     <S.Wrapper>
       <S.TopBar>
-        <div />
+        <S.NavGroup>
+          <S.NavBtn type="button" onClick={goGuide} aria-label={t.guide}>
+            {t.guide}
+          </S.NavBtn>
+        </S.NavGroup>
+
         <S.LangGroup>
           {LANGS.map(({ label, value }) => (
             <S.LangBtn

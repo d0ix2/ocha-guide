@@ -1,23 +1,23 @@
+// src/pages/ServiceInfoPage/ServiceInfoPage.jsx
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { guideList } from '../../data/guideList';
-import * as S from './DetailPage.style';
+import * as S from './ServiceInfoPage.style';
 
-// src 내부의 .md 파일들을 번들에 포함시키고 URL을 얻기 위한 컨텍스트
-const ctx = require.context('../../data/guides', true, /\.md$/);
+const ctx = require.context('../../data/serviceInfo', false, /\.md$/);
 
 const LANGS = ['ja', 'en', 'ko'];
 
-export default function DetailPage() {
-  const { id } = useParams();
+export default function ServiceInfoPage() {
+  const { lang: langParam } = useParams();
   const { search } = useLocation();
 
   const lang = useMemo(() => {
     const q = new URLSearchParams(search).get('lang');
-    return LANGS.includes(q || '') ? q : 'ja';
-  }, [search]);
+    const candidate = q || langParam || 'ja';
+    return LANGS.includes(candidate) ? candidate : 'ja';
+  }, [search, langParam]);
 
   const [md, setMd] = useState('');
   const [err, setErr] = useState(null);
@@ -25,20 +25,7 @@ export default function DetailPage() {
   // eslint-disable-next-line no-unused-vars
   const [resolvedLang, setResolvedLang] = useState(lang);
 
-  const meta = useMemo(() => guideList.find((it) => it.id === id) || null, [id]);
-  const base = useMemo(() => meta?.base || `${id}/${id}`, [meta, id]);
-
-  // 페이지 상위 타이틀: 현재 사용 x
-  // eslint-disable-next-line no-unused-vars
-  const title =
-    meta?.i18n?.[lang]?.title ??
-    meta?.i18n?.ja?.title ??
-    meta?.i18n?.en?.title ??
-    meta?.i18n?.ko?.title ??
-    '';
-
   useEffect(() => {
-    if (!meta) return;
     let alive = true;
     setMd('');
     setErr(null);
@@ -47,11 +34,12 @@ export default function DetailPage() {
 
     (async () => {
       for (const l of order) {
-        const key = `./${base}-${l}.md`;
+        const key = `./serviceInfo-${l}.md`;
         let url;
         try {
-          url = ctx(key);
+          url = ctx(key); // 번들에서 URL 추출
         } catch {
+          // 해당 언어 파일이 없는 경우 다음 언어 시도
           continue;
         }
 
@@ -73,9 +61,7 @@ export default function DetailPage() {
     return () => {
       alive = false;
     };
-  }, [meta, base, lang]);
-
-  if (!meta) return <div style={{ padding: 24 }}>Not found: {id}</div>;
+  }, [lang]);
 
   return (
     <S.Container>

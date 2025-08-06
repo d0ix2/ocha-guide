@@ -12,6 +12,45 @@ export const TopBar = styled.div`
   justify-content: space-between;
 `;
 
+export const NavGroup = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+`;
+
+export const NavBtn = styled.button`
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid ${({ theme }) => theme.color.border};
+  background: ${({ theme }) => theme.color.background};
+  color: ${({ theme }) => theme.color.primary};
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition:
+    transform 120ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+
+  &:hover {
+    transform: scale(1.06);
+    border-color: ${({ theme }) => theme.color.primary};
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: ${({ theme }) =>
+      `0 0 0 3px color-mix(in srgb, ${theme.color.primary} 25%, transparent)`};
+  }
+`;
+
 export const LangGroup = styled.div`
   display: flex;
   gap: 12px;

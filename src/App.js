@@ -1,12 +1,14 @@
+// src/App.jsx
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import theme from './styles/theme';
 
-import MainPage from './pages/mainPage/mainPage';
-import DetailPage from './pages/detailPage/detailPage';
+import MainPage from './pages/MainPage/MainPage';
+import DetailPage from './pages/DetailPage/DetailPage';
+import ServiceInfoPage from './pages/ServiceInfoPage/ServiceInfoPage';
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState('light');
@@ -26,6 +28,7 @@ function App() {
             }
           />
           <Route path="/guide/:id" element={<DetailPage />} />
+          <Route path="/service-info" element={<ServiceInfoPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
