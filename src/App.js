@@ -15,8 +15,8 @@ function App() {
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle />
       <Router>
-    <Routes>
-      <Route
+        <Routes>
+          <Route
             path="/"
             element={
               <MainPage
@@ -25,9 +25,9 @@ function App() {
               />
             }
           />
-      <Route path="/guide/:id" element={<DetailPage />} />
-    </Routes>
-    </Router>
+          <Route path="/guide/:id" element={<DetailPage />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }

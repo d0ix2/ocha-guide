@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 // public/guides/manifest.json 을 가져와 캐시
-  const v = 4;
-  const MANIFEST_URL = `${process.env.PUBLIC_URL}/guides/manifest.json?v=${v}`;
+const v = 4;
+const MANIFEST_URL = `${process.env.PUBLIC_URL}/guides/manifest.json?v=${v}`;
 
 let _cache = null;
 let _inflight = null;

@@ -7,7 +7,7 @@ export const CardWrapper = styled.div`
   background: #fff;
   border: 1px solid #eee;
   box-shadow: ${({ theme }) =>
-  `0 0 0 3px color-mix(in srgb, ${theme.color.primary} 10%, transparent)`};
+    `0 0 0 3px color-mix(in srgb, ${theme.color.primary} 10%, transparent)`};
   overflow: hidden;
 
   a {
@@ -17,15 +17,14 @@ export const CardWrapper = styled.div`
   }
 `;
 
-
 export const Thumb = styled.div`
   height: 180px;
   display: flex;
   align-items: center;
-  justify-content: center;     
+  justify-content: center;
   background: #f5f6f7;
   overflow: hidden;
-  padding: 10px 12px;          
+  padding: 10px 12px;
 
   /* 이미지일 때 */
   img {
@@ -37,7 +36,7 @@ export const Thumb = styled.div`
   /* 아이콘(SVG)일 때 */
   svg {
     display: block;
-    width: clamp(80px, 56%, 100px); 
+    width: clamp(80px, 56%, 100px);
     height: auto;
   }
 `;

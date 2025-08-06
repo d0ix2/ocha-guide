@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export function useDragScroll(
   trackRef,
-  { loop = true, setWidth = 0, dragScale = 0.6, dragThreshold = 8 } = {}
+  { loop = true, setWidth = 0, dragScale = 0.6, dragThreshold = 8 } = {},
 ) {
   const draggingRef = useRef(false);
 
@@ -16,8 +16,7 @@ export function useDragScroll(
     let hasMoved = false;
 
     const range = () => setWidth * 2;
-    const wrapPos = (v) =>
-      !loop || setWidth <= 0 ? v : ((v % range()) + range()) % range();
+    const wrapPos = (v) => (!loop || setWidth <= 0 ? v : ((v % range()) + range()) % range());
 
     // 드래그 종료 후 발생하는 '다음 클릭'을 1회 억제
     const suppressNextClick = () => {
@@ -27,16 +26,15 @@ export function useDragScroll(
         document.removeEventListener('click', onClickCapture, true);
       };
       document.addEventListener('click', onClickCapture, true);
-      // (짧은 타임아웃으로도 가능하나, 1회 제거가 더 안전)
     };
 
     const onPointerDown = (e) => {
       isDown = true;
       hasMoved = false;
-      draggingRef.current = false; // 아직 드래그 시작 아님
+      draggingRef.current = false; 
       startX = e.clientX;
       startLeft = el.scrollLeft;
-      // ❌ setPointerCapture 사용하지 않습니다 — 링크 클릭 막힘 원인
+      // setPointerCapture 사용 x: 링크 클릭 막힘 원인
       // el.setPointerCapture?.(e.pointerId);
     };
 
@@ -51,7 +49,7 @@ export function useDragScroll(
         el.setAttribute('data-dragging', 'true'); // 스냅/스무스 off
       }
 
-      const dx = rawDx * dragScale;          // 감쇠 적용
+      const dx = rawDx * dragScale; // 감쇠 적용
       el.scrollLeft = wrapPos(startLeft - dx);
     };
 

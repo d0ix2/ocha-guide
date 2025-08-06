@@ -1,4 +1,3 @@
-// src/pages/detailPage/detailPage.jsx
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -6,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { guideList } from '../../data/guideList';
 import * as S from './detailPage.style';
 
-// 🚩 src 내부의 .md 파일들을 번들에 포함시키고 URL을 얻기 위한 컨텍스트
+// src 내부의 .md 파일들을 번들에 포함시키고 URL을 얻기 위한 컨텍스트
 const ctx = require.context('../../data/guides', true, /\.md$/);
 
 const LANGS = ['ja', 'en', 'ko'];
@@ -27,7 +26,7 @@ export default function DetailPage() {
   const meta = useMemo(() => guideList.find((it) => it.id === id) || null, [id]);
   const base = useMemo(() => meta?.base || `${id}/${id}`, [meta, id]);
 
-  // (필요 시 제목 표시용 — 기능 변화 없음, 사용하지 않으면 유지만 해도 OK)
+  // 페이지 상위 타이틀: 현재 사용 x
   const title =
     meta?.i18n?.[lang]?.title ??
     meta?.i18n?.ja?.title ??

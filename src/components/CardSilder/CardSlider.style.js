@@ -46,9 +46,10 @@ export const Track = styled.div`
   -webkit-overflow-scrolling: touch;
 
   /* 스크롤바 숨기기 */
-  -ms-overflow-style: none;     /* IE/레거시 Edge */
-  scrollbar-width: none;        /* Firefox */
-  &::-webkit-scrollbar {        /* Chromium/Safari */
+  -ms-overflow-style: none; /* IE/레거시 Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    /* Chromium/Safari */
     display: none;
     width: 0;
     height: 0;
@@ -78,9 +79,17 @@ const ArrowBase = styled.button`
   place-items: center;
   user-select: none;
 
-  &:hover { background: ${({ theme }) => theme.color.background}; }
-  &:active { transform: translateY(-50%) scale(0.98); }
+  &:hover {
+    background: ${({ theme }) => theme.color.background};
+  }
+  &:active {
+    transform: translateY(-50%) scale(0.98);
+  }
 `;
 
-export const ArrowLeft = styled(ArrowBase)` left: 8px; `;
-export const ArrowRight = styled(ArrowBase)` right: 8px; `;
+export const ArrowLeft = styled(ArrowBase)`
+  left: 8px;
+`;
+export const ArrowRight = styled(ArrowBase)`
+  right: 8px;
+`;

@@ -10,7 +10,7 @@ export function useAutoplayCarousel(
     canScroll = true,
     resumeDelay = 1200,
     draggingRef, // 선택(ref<boolean>)
-  } = {}
+  } = {},
 ) {
   useEffect(() => {
     const el = trackRef.current;

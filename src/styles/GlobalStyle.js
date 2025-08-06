@@ -68,7 +68,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   :where(article, .markdown, [data-markdown]) li { margin: 6px 0; }
   :where(article, .markdown, [data-markdown]) li::marker {
-    color: ${({ theme }) => (theme.color?.coloredText || theme.color?.link || '#2563eb')};
+    color: ${({ theme }) => theme.color?.coloredText || theme.color?.link || '#2563eb'};
     font-size: 0.95em;
   }
 

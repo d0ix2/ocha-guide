@@ -9,11 +9,10 @@ export function useCarouselMeasure(trackRef, items, { loop = true } = {}) {
     if (!el) return;
 
     const styles = getComputedStyle(el);
-    const gap = parseFloat(
-      styles.getPropertyValue('gap') ||
-      styles.getPropertyValue('column-gap') ||
-      '16px'
-    ) || 16;
+    const gap =
+      parseFloat(
+        styles.getPropertyValue('gap') || styles.getPropertyValue('column-gap') || '16px',
+      ) || 16;
 
     // 첫 세트(items)의 총 너비 계산
     let total = 0;

@@ -19,15 +19,16 @@ export const LangGroup = styled.div`
 
 export const LangBtn = styled.button`
   border: none;
-  background: ${({ $active, theme }) =>
-  $active ? theme.color.primary : theme.color.background};
-  color: ${({ $active, theme }) =>
-  $active ? theme.color.background : theme.color.border};
+  background: ${({ $active, theme }) => ($active ? theme.color.primary : theme.color.background)};
+  color: ${({ $active, theme }) => ($active ? theme.color.background : theme.color.border)};
   padding: 6px 10px;
   border-radius: 999px;
   cursor: pointer;
   transform: translateZ(0);
-  transition: transform 120ms ease, background 160ms ease, color 160ms ease;
+  transition:
+    transform 120ms ease,
+    background 160ms ease,
+    color 160ms ease;
   font-weight: 600;
   letter-spacing: 0.02em;
 
@@ -79,11 +80,13 @@ export const SearchInput = styled.input`
   border-radius: 24px;
   font-size: 14px;
   outline: none;
-  transition: box-shadow 120ms ease, border-color 120ms ease;
+  transition:
+    box-shadow 120ms ease,
+    border-color 120ms ease;
 
   &:focus {
     box-shadow: ${({ theme }) =>
-  `0 0 0 3px color-mix(in srgb, ${theme.color.primary} 10%, transparent)`};
+      `0 0 0 3px color-mix(in srgb, ${theme.color.primary} 10%, transparent)`};
   }
 `;
 
@@ -103,10 +106,12 @@ export const ClearBtn = styled.button`
   line-height: 1;
   display: grid;
   place-items: center;
-  transition: transform 120ms ease, background 160ms ease;
+  transition:
+    transform 120ms ease,
+    background 160ms ease;
 
   &:hover {
     transform: translateY(-50%) scale(1.06);
-    background: ${({ theme }) => theme.color.background};;
+    background: ${({ theme }) => theme.color.background};
   }
 `;

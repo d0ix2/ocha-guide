@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as S from './Card.style';
-import { getIcon } from '../../assets/index'
+import { getIcon } from '../../assets/index';
 
 export default function Card({ id, title, caption, icon, lang }) {
   const IconCmp = icon ? getIcon(icon) : null;
@@ -25,4 +25,3 @@ export default function Card({ id, title, caption, icon, lang }) {
     </S.CardWrapper>
   );
 }
-

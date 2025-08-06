@@ -25,10 +25,7 @@ export default function CardSlider({
   const trackRef = useRef(null);
 
   // 렌더 아이템 (루프면 3배)
-  const renderItems = useMemo(
-    () => (loop ? [...items, ...items, ...items] : items),
-    [items, loop]
-  );
+  const renderItems = useMemo(() => (loop ? [...items, ...items, ...items] : items), [items, loop]);
 
   // 1) 세트폭 측정 & 초기 위치
   const { setWidth, canScroll } = useCarouselMeasure(trackRef, items, { loop });
@@ -60,11 +57,10 @@ export default function CardSlider({
     const card = el.querySelector('[data-card]');
     const cardWidth = card ? card.getBoundingClientRect().width : 260;
     const styles = getComputedStyle(el);
-    const gap = parseFloat(
-      styles.getPropertyValue('column-gap') ||
-      styles.getPropertyValue('gap') ||
-      '16px'
-    ) || 16;
+    const gap =
+      parseFloat(
+        styles.getPropertyValue('column-gap') || styles.getPropertyValue('gap') || '16px',
+      ) || 16;
     const delta = (cardWidth + gap) * step * (dir === 'left' ? -1 : 1);
     el.scrollBy({ left: delta, behavior: 'smooth' });
   };
@@ -77,10 +73,17 @@ export default function CardSlider({
   return (
     <S.SliderWrapper>
       {showArrows && (
-        <S.ArrowLeft onClick={() => scrollByStep('left')} aria-label="左へ">‹</S.ArrowLeft>
+        <S.ArrowLeft onClick={() => scrollByStep('left')} aria-label="左へ">
+          ‹
+        </S.ArrowLeft>
       )}
 
-      <S.Track ref={trackRef} data-autoplay={autoPlay ? 'true' : undefined} role="list" tabIndex={0}>
+      <S.Track
+        ref={trackRef}
+        data-autoplay={autoPlay ? 'true' : undefined}
+        role="list"
+        tabIndex={0}
+      >
         {renderItems.map((g, idx) => {
           const { title, caption } = pickText(g);
           return (
@@ -92,7 +95,9 @@ export default function CardSlider({
       </S.Track>
 
       {showArrows && (
-        <S.ArrowRight onClick={() => scrollByStep('right')} aria-label="右へ">›</S.ArrowRight>
+        <S.ArrowRight onClick={() => scrollByStep('right')} aria-label="右へ">
+          ›
+        </S.ArrowRight>
       )}
     </S.SliderWrapper>
   );

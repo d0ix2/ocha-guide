@@ -14,7 +14,10 @@ export const guideList = [
     icon: 'document',
     i18n: {
       ja: { title: '行政手続き', caption: '転入届 / 国民健康保険 / 年金免除' },
-      en: { title: 'Administrative Procedures', caption: 'Resident registration / National Health Insurance / Pension exemption' },
+      en: {
+        title: 'Administrative Procedures',
+        caption: 'Resident registration / National Health Insurance / Pension exemption',
+      },
       ko: { title: '행정 절차', caption: '전입신고 / 건강보험 / 연금 면제' },
     },
   },

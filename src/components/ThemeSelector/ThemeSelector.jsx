@@ -9,10 +9,7 @@ const ThemeSelector = ({ currentTheme, onChange }) => {
 
   return (
     <S.ThemeSelectorWrapper>
-      <S.ToggleButton
-        themeColor={currentTheme}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <S.ToggleButton themeColor={currentTheme} onClick={() => setIsOpen(!isOpen)}>
         <FiDroplet size={20} />
       </S.ToggleButton>
       {isOpen && (
