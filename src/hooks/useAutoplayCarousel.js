@@ -97,5 +97,5 @@ export function useAutoplayCarousel(
       el.removeEventListener('wheel', onWheel);
       if (resumeTimer) clearTimeout(resumeTimer);
     };
-  }, [trackRef, enabled, speed, loop, setWidth, canScroll, resumeDelay, draggingRef]);
+  }, [trackRef, enabled, speed, loop, setWidth, canScroll, resumeDelay, draggingRef, mobileBoost]);
 }
